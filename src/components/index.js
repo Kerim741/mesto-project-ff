@@ -1,7 +1,8 @@
-import "./pages/index.css";
-import { initialCards } from "./scripts/cards";
+import "../pages/index.css";
+import { initialCards } from "../scripts/cards.js";
+import { makeCard, deleteCard } from "./card.js";
+import { openPopup, closePopup } from "./modal.js";
 
-const cardTemplate = document.querySelector("#card-template").content;
 const cardContainer = document.querySelector(".places__list");
 
 const profileTitle = document.querySelector(".profile__title");
@@ -31,65 +32,6 @@ const closePopupButtons = document.querySelectorAll(".popup__close");
 
 const popups = document.querySelectorAll('.popup');
 
-function makeCard(card, deleteCard) {
-  const cardElement = cardTemplate
-    .querySelector(".places__item")
-    .cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardDeleteButton = cardElement.querySelector(".card__delete-button");
-  const cardLikeButton = cardElement.querySelector('.card__like-button')
-
-
-  cardLikeButton.addEventListener('click', () => likeActive(cardLikeButton))
-  
-  cardDeleteButton.addEventListener("click", () => {
-    deleteCard(cardElement);
-  });
-  cardImage.addEventListener("click", () =>
-    openPopupImage(card.name, card.link)
-  );
-
-  cardImage.src = card.link;
-  cardImage.alt = card.name;
-  cardTitle.textContent = card.name;
-
-  return cardElement;
-}
-
-function deleteCard(card) {
-  card.remove();
-}
-
-function openPopup(popup) {
-  popup.classList.add("popup_is-opened");
-  document.addEventListener('keydown', handleEscClose);
-
-  popupInputTypeName.value = profileTitle.textContent;
-  popupInputTypeDesc.value = profileTextDescription.textContent;
-}
-
-function handleEscClose(evt) {
-  if(evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    if(openedPopup) {
-      closePopup(openedPopup)
-    }
-  }
-}
-
-function openPopupImage(name, link) {
-  popupImage.src = link;
-  popupImage.alt = name;
-  popupCaption.textContent = name;
-
-  openPopup(popupTypeImage);
-}
-
-function closePopup(popup) {
-  popup.classList.remove("popup_is-opened");
-  document.removeEventListener('keydown', handleEscClose);
-}
 
 function handleFormEdit(e) {
   e.preventDefault();
@@ -97,10 +39,6 @@ function handleFormEdit(e) {
   profileTextDescription.textContent = popupInputTypeDesc.value;
 
   closePopup(popupTypeEdit);
-}
-
-function likeActive(like) {
-  like.classList.toggle('card__like-button_is-active')
 }
 
 function handleNewCard(e) {
@@ -113,6 +51,14 @@ function handleNewCard(e) {
 
   closePopup(popupTypeNewCard)
   popupFormNewCard.reset();
+}
+
+function openPopupImage(name, link) {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupCaption.textContent = name;
+
+  openPopup(popupTypeImage);
 }
 
 profileEditButton.addEventListener("click", () => openPopup(popupTypeEdit));
