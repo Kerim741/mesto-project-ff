@@ -1,6 +1,8 @@
+import { openPopupImage } from "./index.js";
+
 const cardTemplate = document.querySelector("#card-template").content;
 
-export function makeCard(card, deleteCard) {
+export function makeCard(card, deleteCard, openPopupImage) {
     const cardElement = cardTemplate
       .querySelector(".places__item")
       .cloneNode(true);

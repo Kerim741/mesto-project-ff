@@ -1,10 +1,12 @@
 export function openPopup(popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener('keydown', handleEscClose);
+};
 
+export function openPropfilePopup() { 
   popupInputTypeName.value = profileTitle.textContent;
   popupInputTypeDesc.value = profileTextDescription.textContent;
-};
+  } 
 
 export function closePopup(popup) {
     popup.classList.remove("popup_is-opened");

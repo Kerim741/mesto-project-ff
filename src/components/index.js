@@ -1,7 +1,7 @@
 import "../pages/index.css";
 import { initialCards } from "../scripts/cards.js";
 import { makeCard, deleteCard } from "./card.js";
-import { openPopup, closePopup } from "./modal.js";
+import { openPopup, closePopup, openPropfilePopup } from "./modal.js";
 
 const cardContainer = document.querySelector(".places__list");
 
@@ -47,13 +47,13 @@ function handleNewCard(e) {
     name: popupInputNameNewCard.value,
     link: popupInputLinkNewCard.value
   };
-  cardContainer.prepend(makeCard(card, deleteCard))
+  cardContainer.prepend(makeCard(card, deleteCard, openPopupImage))
 
   closePopup(popupTypeNewCard)
   popupFormNewCard.reset();
 }
 
-function openPopupImage(name, link) {
+export function openPopupImage(name, link) {
   popupImage.src = link;
   popupImage.alt = name;
   popupCaption.textContent = name;
@@ -61,7 +61,7 @@ function openPopupImage(name, link) {
   openPopup(popupTypeImage);
 }
 
-profileEditButton.addEventListener("click", () => openPopup(popupTypeEdit));
+profileEditButton.addEventListener("click", () => openPopup(popupTypeEdit, openPropfilePopup));
 profileAddButton.addEventListener("click", () => openPopup(popupTypeNewCard));
 
 closePopupButtons.forEach((buttons) => {
@@ -83,6 +83,6 @@ popupFormEdit.addEventListener("submit", handleFormEdit);
 popupFormNewCard.addEventListener('submit', handleNewCard);
 
 initialCards.forEach(function (card) {
-  cardContainer.append(makeCard(card, deleteCard))
+  cardContainer.append(makeCard(card, deleteCard, openPopupImage))
 });
 
