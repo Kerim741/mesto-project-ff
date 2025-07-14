@@ -1,7 +1,7 @@
 import "../pages/index.css";
 import { initialCards } from "../scripts/cards.js";
 import { makeCard, deleteCard } from "./card.js";
-import { openPopup, closePopup, openPropfilePopup } from "./modal.js";
+import { openPopup, closePopup} from "./modal.js";
 
 const cardContainer = document.querySelector(".places__list");
 
@@ -53,7 +53,7 @@ function handleNewCard(e) {
   popupFormNewCard.reset();
 }
 
-export function openPopupImage(name, link) {
+function openPopupImage(name, link) {
   popupImage.src = link;
   popupImage.alt = name;
   popupCaption.textContent = name;
@@ -61,7 +61,14 @@ export function openPopupImage(name, link) {
   openPopup(popupTypeImage);
 }
 
-profileEditButton.addEventListener("click", () => openPopup(popupTypeEdit, openPropfilePopup));
+function openPropfilePopup(popupTypeEdit) { 
+  openPopup(popupTypeEdit)
+
+  popupInputTypeName.value = profileTitle.textContent;
+  popupInputTypeDesc.value = profileTextDescription.textContent;
+  } 
+
+profileEditButton.addEventListener("click", () => openPropfilePopup(popupTypeEdit));
 profileAddButton.addEventListener("click", () => openPopup(popupTypeNewCard));
 
 closePopupButtons.forEach((buttons) => {
